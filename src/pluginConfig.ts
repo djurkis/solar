@@ -1,17 +1,17 @@
 import type { ExternalPluginConfig } from '@windy/interfaces';
 
 const config: ExternalPluginConfig = {
-    name: 'windy-plugin-my-plugin',
-    version: '0.1.0',
-    icon: '🔌',
-    title: 'This is my first plugin',
-    description: 'This is my first plugin.',
-    author: 'John Doe (optional company name)',
-    repository: 'https://github.com/windycom/windy-plugin-template',
+    name: 'windy-plugin-eu-solar',
+    version: '2.0.0',
+    icon: '☀️',
+    title: 'Central EU Solar Capacity',
+    description: 'Visualize 10,000+ solar PV plants (49 GW) across CZ, DE, PL, AT, SK, HU with H3 hexagonal density overlay and plant-level details.',
+    author: 'jurkis',
+    repository: 'https://github.com/jurkis/windy-plugin-eu-solar',
     desktopUI: 'rhpane',
-    mobileUI: 'fullscreen',
-    routerPath: '/my-plugin',
-    private: true,
+    mobileUI: 'small',
+    routerPath: '/eu-solar',
+    private: false,
 };
 
 export default config;
