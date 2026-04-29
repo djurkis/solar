@@ -1,60 +1,87 @@
-# Windy Central EU solar Capacity plugin
+# ☀️ Central EU Solar Capacity — Windy Plugin
+
+Interactive hexagonal overlay of **10,136 utility-scale solar PV plants** (49 GW) across six Central European countries, built for the [Windy.com](https://www.windy.com) weather platform.
+
 ![Plugin Demo](demo.gif)
 
+## Install
 
-Template for development of Windy Plugins.
+Paste this URL into [Windy Developer Mode](https://www.windy.com/developer-mode):
 
-**Documentation at: [https://docs.windy-plugins.com/](https://docs.windy-plugins.com/)**
+```
+https://windy-plugins.com/16844715/windy-plugin-eu-solar/2.1.0/plugin.min.js
+```
 
-**Documentation for the Leaflet GL library is at [https://windycom.github.io/LeafletGL/docs/](https://windycom.github.io/LeafletGL/docs/)**
+## Features
 
-## Quick start
+- **H3 Hexagonal Grid** — 3,630 hex cells (res-4 + res-5) with plasma colormap showing capacity density
+- **6 Country Toggles** — CZ · DE · PL · AT · SK · HU
+- **Zoom-Adaptive Resolution** — switches from res-4 (country view) to res-5 (regional detail) at zoom level 8
+- **Capacity Labels** — MW values displayed on each hex cell
+- **Click for Details** — popup with per-country breakdown and top plants per hex
+- **Coverage Gauge** — mapped vs official installed capacity
 
-- Install dependencies with `npm i`
-- Compile the plugin in watch mode with `npm start`
-- Navigate to <https://www.windy.com/developer-mode>
-- Load your plugin from the URL <https://localhost:9999/plugin.js>
-- Code away!
 
-For running the examples:
+## Coverage
 
-- Build the desired example in watch mode with `npm run example01` (or `example02`, etc.)
-- Load the example in Windy's developer mode using the URL <https://localhost:9999/example01/plugin.js>
+| Country | Plants | Mapped | Official | Coverage |
+|---------|--------|--------|----------|----------|
+| 🇨🇿 CZ | 598 | 2.9 GW | 5.3 GW | 55% |
+| 🇩🇪 DE | 6,245 | 31.3 GW | 87.0 GW | 36% |
+| 🇵🇱 PL | 2,386 | 9.3 GW | 17.8 GW | 52% |
+| 🇦🇹 AT | 168 | 0.9 GW | 8.3 GW | 11% |
+| 🇸🇰 SK | 176 | 0.9 GW | 1.7 GW | 53% |
+| 🇭🇺 HU | 563 | 4.1 GW | 6.5 GW | 62% |
 
-## Known issues
+> Coverage gaps are primarily distributed rooftop & small C&I solar (<1 MW) not tracked in utility-scale plant databases.
 
-- In *example03* the boat orientation resets after the user zooms.
-This is likely related to Leaflet GL executing `zoom` events in slightly different order.
-Markers now also internally subscribe to the map's `zoom` event to update their CSS positioning,
-which likely executes *after* the user's `zoom` event in this example.
-- In *example04* map clicks within the rendered cycle do not fire the `singleclick` event, as they have before Leaflet LG.
+## Data Sources
 
-## CHANGELOG
+| Source | License | What |
+|--------|---------|------|
+| [PyPSA powerplantmatching](https://github.com/PyPSA/powerplantmatching) | CC-BY-4.0 | Plant-level data (GEM · GPD · ENTSO-E · BeyondCoal) |
+| [Energy-Charts (Fraunhofer ISE)](https://energy-charts.info) | Open | Official installed capacity |
+| [H3 (Uber)](https://h3geo.org) | Apache 2.0 | Hexagonal grid system |
 
--   5.0.0
-    -   Updated example code for the new Leaflet GL map library introduced in client v49.0.0
--   4.2.2
-    -   New plugins are marked as private by default
--   4.2.1
-    -   Updated `@windycom/plugin-devtools` for client v46.1.0
--   4.2.0
-    -   Fixed compiler sourcemap error
--   4.1.0
-    -   Updated plugin upload URL
--   4.0.0
-    -   Updated `@windycom/plugin-devtools` for client v45.0.0
--   3.0.0
-    -   Updated `@windycom/plugin-devtools` for client v42.2.0
--   2.0.0
-    -   Completely new version of the plugin system based in Windy client v42+
--   1.0.0
-    -   New rollup compiler, no more riot architecture
-    -   Updated examples for Windy client v39
--   0.4.0
-    -   Added `plugin-data-loader` to the Plugins API
--   0.3.0
-    -   Examples moved to examples dir
--   0.2.0
-    -   Fixed wrong examples
--   0.1.1
-    -   Initial version of this repo
+## Tech Stack
+
+- **Svelte** + **TypeScript** — plugin UI
+- **Leaflet** — map rendering (via Windy)
+- **H3** — hexagonal spatial indexing (pre-computed in Python, no runtime dependency)
+- **Rollup** — bundling
+
+## Build
+
+```bash
+npm install
+npm run build        # production build → dist/
+npm start            # dev server with watch → https://localhost:9999
+```
+
+### Regenerate Hex Data
+
+```bash
+# Requires Python with h3 + pandas
+pip install h3 pandas
+python scripts/build_hex_data.py
+```
+
+## Architecture
+
+```
+src/
+├── plugin.svelte          # Main UI — country toggles, gauge, top plants
+├── pluginConfig.ts        # Plugin metadata (name, version, description)
+├── hexOverlay.ts          # H3 hex polygon rendering + plasma colormap
+├── mapLayers.ts           # Individual plant marker rendering
+├── constants.ts           # Geographic bounds, zoom thresholds
+└── data/
+    ├── solarHexData.ts    # Pre-computed H3 hex cells (auto-generated)
+    ├── countries.ts       # Country metadata (flags, colors)
+    └── czechSolar.ts      # CZ plant-level data (598 plants)
+```
+
+## License
+
+Data: [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) (PyPSA powerplantmatching)
+Code: MIT
