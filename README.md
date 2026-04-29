@@ -1,4 +1,6 @@
-# Windy Plugin Template
+# Windy Central EU solar Capacity plugin
+![Plugin Demo](demo.gif)
+
 
 Template for development of Windy Plugins.
 
