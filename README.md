@@ -60,11 +60,15 @@ npm start            # dev server with watch → https://localhost:9999
 
 ### Regenerate Hex Data
 
+The hex aggregation script lives one level up in the parent workspace:
+
 ```bash
 # Requires Python with h3 + pandas
 pip install h3 pandas
-python scripts/build_hex_data.py
+./.venv/bin/python scripts/build_hex_data.py
 ```
+
+This reads `powerplants.csv`, filters solar ≥1 MW for the 6 target countries, assigns each plant to H3 cells at res-4 and res-5, and outputs `src/data/solarHexData.ts`.
 
 ## Architecture
 
@@ -73,7 +77,6 @@ src/
 ├── plugin.svelte          # Main UI — country toggles, gauge, top plants
 ├── pluginConfig.ts        # Plugin metadata (name, version, description)
 ├── hexOverlay.ts          # H3 hex polygon rendering + plasma colormap
-├── mapLayers.ts           # Individual plant marker rendering
 ├── constants.ts           # Geographic bounds, zoom thresholds
 └── data/
     ├── solarHexData.ts    # Pre-computed H3 hex cells (auto-generated)
