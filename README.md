@@ -9,7 +9,7 @@ Interactive hexagonal overlay of **10,136 utility-scale solar PV plants** (49 GW
 Paste this URL into [Windy Developer Mode](https://www.windy.com/developer-mode):
 
 ```
-https://windy-plugins.com/16844715/windy-plugin-eu-solar/2.1.0/plugin.min.js
+https://windy-plugins.com/16844715/windy-plugin-eu-solar/2.1.1/plugin.min.js
 ```
 
 ## Features

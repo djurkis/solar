@@ -1,6 +1,6 @@
 {
     "name": "windy-plugin-eu-solar",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Windy plugin visualizing 10,000+ utility-scale solar PV plants (49 GW) across CZ, DE, PL, AT, SK, HU with H3 hexagonal density overlay",
     "main": "dist/plugin.min.js",
     "type": "module",

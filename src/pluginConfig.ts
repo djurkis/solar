@@ -2,7 +2,7 @@ import type { ExternalPluginConfig } from '@windy/interfaces';
 
 const config: ExternalPluginConfig = {
     name: 'windy-plugin-eu-solar',
-    version: '2.1.0',
+    version: '2.1.1',
     icon: '☀️',
     title: 'Central EU Solar Capacity',
     description: 'Visualize 10,000+ solar PV plants (49 GW) across CZ, DE, PL, AT, SK, HU with H3 hexagonal density overlay and plant-level details.',
