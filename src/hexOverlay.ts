@@ -132,6 +132,31 @@ export function renderHexes(
 
         poly.addTo(layer);
         polygons.set(cell.h3, poly);
+
+        // Capacity label at hex center
+        const latC = cell.bounds.reduce((s, b) => s + b[0], 0) / cell.bounds.length;
+        const lonC = cell.bounds.reduce((s, b) => s + b[1], 0) / cell.bounds.length;
+        const label = filteredCap >= 1000
+            ? (filteredCap / 1000).toFixed(1) + 'k'
+            : Math.round(filteredCap).toString();
+
+        const icon = new L.DivIcon({
+            className: '',
+            iconSize: [40, 16],
+            iconAnchor: [20, 8],
+            html: `<div style="
+                font-size:10px;
+                font-weight:800;
+                font-family:system-ui,sans-serif;
+                color:#fff;
+                text-shadow:0 0 4px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,0.7);
+                text-align:center;
+                pointer-events:none;
+                white-space:nowrap;
+            ">${label}</div>`,
+        });
+
+        L.marker([latC, lonC], { icon, interactive: false }).addTo(layer);
     }
 }
 
